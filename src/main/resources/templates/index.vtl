@@ -1,21 +1,14 @@
-<h1>Places I've been!</h1>
+<h1>Tamagotchi</h1>
 
-New place:
-<ul>
-#foreach ($place in $places)
-  <li>$place.getDescription()</li>
-#end
-</ul>
+Your New Tamagotchi pet:
 
-<p>Add a new place that you've been.</p>
+<p>Add a new pet to take care of.</p>
 
-<form action="/places" method="post">
+<form action="/pet" method="post">
   <div class="form-group">
-    <label for="newPlace">Enter the name of a new place you've been.</label>
-    <input id="newPlace" name="newPlace" class="form-control" type="text">
+    <label for="petName">Enter the name of your new pet.</label>
+    <input id="petName" name="petName" class="form-control" type="text">
   <br>
-</div>
-
-  <button type="submit" class="btn btn-info">Add place</button>
-  <p></p>
+    <button type="submit" class="btn btn-info">Name your pet</button>
+  </div>
 </form>

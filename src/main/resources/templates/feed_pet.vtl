@@ -1,0 +1,16 @@
+<h1>Tamagotchi</h1>
+
+#if($myPet.isHungry())
+  <h3 class="well">Your pet is hungry. You need to feed it.</h3>
+  <form action="/feed_pet" method="post">
+  <div class="form-group">
+    <label for="feedPet">Enter the name of your new pet.</label>
+    <input id="feedPet" name="feedPet" class="form-control" type="text">
+  <br>
+    <button type="submit" class="btn btn-info">Feed your pet</button>
+  </div>
+  </form>
+#end
+
+
+<a href="/">Go Back</a>

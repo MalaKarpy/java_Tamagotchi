@@ -8,36 +8,35 @@ public class App {
   public static void main(String[] args) {
     staticFileLocation("/public");
     String layout = "templates/layout.vtl";
-
+ //
     get("/", (request, response) -> {
-        HashMap<String, Object> model = new HashMap<String, Object>();
-        model.put("places", request.session().attribute("places"));
+      HashMap<String, Object> model = new HashMap<String, Object>();
 
-        model.put("template", "templates/index.vtl");
-        return new ModelAndView(model, layout);
+      model.put("template", "templates/index.vtl");
+      return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    post("/places", (request, response) -> {
-     HashMap<String, Object> model = new HashMap<String, Object>();
+    post("/pet", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      String petName = request.queryParams("petName");
+      Tamagotchi newPet = new Tamagotchi(petName);
 
+      request.session().attribute("myPet", newPet);
 
-     // array name is name of Class
-     ArrayList<Places> places = request.session().attribute("places");
+      model.put("myPet", newPet);
+      model.put("template", "templates/pet.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
 
-     if (places == null) {
-       places = new ArrayList<Places>();
-       request.session().attribute("places", places);
- }
+    post("/feed_pet", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
 
-     String newPlace = request.queryParams("newPlace");
-     Places addedPlace = new Places(newPlace);
+      Tamagotchi myPet = request.session().attribute("feedPet");
+      myPet.feed();
 
-     // adding the Place object as opposed to the String from user
-     places.add(addedPlace);
-
-     model.put("template", "templates/places.vtl");
-     return new ModelAndView(model, layout);
-   }, new VelocityTemplateEngine());
-
+      model.put("myPet", myPet);
+      model.put("template", "templates/feed_pet.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
   }
 }
